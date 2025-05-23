@@ -7,3 +7,4 @@ app:
   user-count: 10
   seat-count: 20
   ticket-price: 20
+  wallet-balance: 10000

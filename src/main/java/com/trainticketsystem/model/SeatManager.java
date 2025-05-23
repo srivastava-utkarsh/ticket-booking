@@ -10,6 +10,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * Manages seat booking operations with thread safety and timeout handling.
+ * Handles seat reservation, payment processing, and error recovery.
+ */
 @Service
 @Slf4j
 public class SeatManager {
@@ -23,8 +27,22 @@ public class SeatManager {
 		this.appProperties = appProperties;
 	}
 
+	/**
+	 * Books a seat for a user with the following steps:
+	 * 1. Validates seat existence
+	 * 2. Acquires seat lock with timeout
+	 * 3. Checks seat availability
+	 * 4. Processes payment
+	 * 5. Reserves seat
+	 * 6. Handles errors and refunds if needed
+	 * 
+	 * @param user User booking the seat
+	 * @param seatId Seat to be booked
+	 * @return CompletableFuture with booking result
+	 */
 	public CompletableFuture<BookingResult> bookSeats(User user, String seatId) {
 		return CompletableFuture.supplyAsync(() -> {
+			// Validate seat exists
 			Seat seat = seatMap.get(seatId);
 			if (seat == null) {
 				return BookingResult.failed("Seat not found: " + seatId);

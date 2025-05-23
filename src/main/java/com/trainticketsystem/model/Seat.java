@@ -1,14 +1,19 @@
 package com.trainticketsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.concurrent.locks.ReentrantLock;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Seat {
 	private final String id;
 	private boolean isAvailable;
 	private User reservedBy;
+
+	@JsonIgnore
 	private final ReentrantLock lock = new ReentrantLock();
 
 	public Seat(String id, boolean isAvailable) {

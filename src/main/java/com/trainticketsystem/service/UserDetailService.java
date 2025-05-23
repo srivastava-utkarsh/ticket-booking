@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+/**
+ * Service for managing user details and operations.
+ * Handles user information retrieval and user deletion with seat cleanup.
+ */
 @Service
 @Slf4j
 public class UserDetailService {
@@ -25,6 +29,12 @@ public class UserDetailService {
 		this.seatMap = seatMap;
 	}
 
+	/**
+	 * Retrieves user details including their ticket information.
+	 * 
+	 * @param userId ID of the user to retrieve
+	 * @return TicketResponse containing user details or error message
+	 */
 	public TicketResponse getUserDetails(String userId){
 		User user = userMap.get(Integer.valueOf(userId));
 		log.info("User found: {}", user != null);
@@ -37,6 +47,11 @@ public class UserDetailService {
 		return responseBuilder.sendUserResponse(user);
 	}
 
+	/**
+	 * Deletes a user and releases their seat if they have one.
+	 * 
+	 * @param userId ID of the user to delete
+	 */
 	public void deleteUser(String userId){
 		User user = userMap.get(Integer.valueOf(userId));
 		log.info("User found: {}", user != null);

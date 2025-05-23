@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Service for handling seat modification operations.
+ * Manages the process of changing a user's seat with validation and cleanup.
+ */
 @Service
 @Slf4j
 public class ModifySeatService {
@@ -30,10 +34,25 @@ public class ModifySeatService {
 		this.seatMap = seatMap;
 	}
 
+	/**
+	 * Modifies a user's seat assignment.
+	 * Releases the old seat and books a new one if available.
+	 * 
+	 * @param userId ID of the user modifying their seat
+	 * @param seatNumber New seat number to be booked
+	 * @return CompletableFuture with modification result or error message
+	 */
 	public CompletableFuture<TicketResponse> modifySeating(String userId, String seatNumber) {
+		// Get user from map
 		User user = userMap.get(Integer.valueOf(userId));
 
+		// Check if user has existing ticket
 		if (user.getTicket() != null) {
+			// Prevent booking same seat again
+			if(user.getTicket().getSeatNumber().equals(seatNumber))
+				return CompletableFuture.completedFuture(responseBuilder.sendFailedResponse(null, "Cannot book same ticket again"));
+
+			// Release old seat
 			Seat seat = seatMap.get(user.getTicket().getSeatNumber());
 			if (seat != null) {
 				seat.setAvailable(true);
@@ -41,16 +60,20 @@ public class ModifySeatService {
 			}
 		}
 
+		// Book new seat
 		return seatManager.bookSeats(user, seatNumber)
 				.thenApply(bookingResult -> {
+					// Handle successful booking
 					if (bookingResult.isSuccess()) {
 						return responseBuilder.sendPurchaseSuccessResponse(user, seatNumber);
 					}
-					return responseBuilder.sendFailedResponse(bookingResult,null);
+					// Handle booking failure
+					return responseBuilder.sendFailedResponse(bookingResult, null);
 				})
 				.exceptionally(throwable -> {
+					// Handle any errors during booking
 					log.error("Error processing ticket purchase: {}", throwable.getMessage());
-					return responseBuilder.sendFailedResponse(null,"Error processing ticket purchase: " + throwable.getMessage());
+					return responseBuilder.sendFailedResponse(null, "Error processing ticket purchase: " + throwable.getMessage());
 				});
 	}
 }

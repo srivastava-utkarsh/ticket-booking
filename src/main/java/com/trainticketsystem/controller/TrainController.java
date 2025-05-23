@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -67,6 +69,18 @@ public class TrainController {
                     }
                     return ResponseEntity.badRequest().body(response);
                 });
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<User>> getAllUsers() {
+        LinkedHashMap<Integer, User> userList = new LinkedHashMap<>(userMap);
+        return ResponseEntity.ok(userList.entrySet().stream().map(Map.Entry::getValue).toList());
+    }
+
+    @GetMapping("/seat")
+    public ResponseEntity<List<Seat>> getAllSeat() {
+        LinkedHashMap<String, Seat> userList = new LinkedHashMap<>(seatMap);
+        return ResponseEntity.ok(userList.entrySet().stream().map(Map.Entry::getValue).toList());
     }
 
 } 

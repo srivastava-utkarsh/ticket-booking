@@ -25,8 +25,7 @@ public class User {
 	@JsonIgnore
 	private Ticket ticket;
 
-	// Add a simplified ticket reference for JSON
-	private String seatNumber;  // Only include seat number in JSON
+	private String seatNumber;
 
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
