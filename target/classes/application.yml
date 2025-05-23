@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ticket-booking-app
+server:
+  port: 9898
+app:
+  user-count: 10
+  seat-count: 20
+  ticket-price: 20
