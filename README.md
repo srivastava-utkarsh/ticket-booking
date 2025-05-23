@@ -49,13 +49,12 @@ The heart of the application is the `SeatManager` class which handles all seat b
 
 ### 1. Purchase Ticket
 ```http
-POST /api/train/purchase?seatNumber=A1
+POST /api/train/purchase
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john@example.com"
+    "userId": "1",
+    "seatNumber": "A1"
 }
 ```
 - Validates user existence
@@ -65,7 +64,13 @@ Content-Type: application/json
 
 ### 2. Modify Seat
 ```http
-PUT /api/train/user/{email}/seat?newSeatNumber=B1
+PUT /api/train/modify-seat
+Content-Type: application/json
+
+{
+    "userId": "1",
+    "seatNumber": "B1"
+}
 ```
 - Releases old seat
 - Books new seat
@@ -74,7 +79,7 @@ PUT /api/train/user/{email}/seat?newSeatNumber=B1
 
 ### 3. View Receipt
 ```http
-GET /api/train/receipt/{email}
+GET /api/train/receipt/{userId}
 ```
 - Shows ticket details
 - Includes user and seat information
@@ -82,7 +87,7 @@ GET /api/train/receipt/{email}
 
 ### 4. Delete User
 ```http
-DELETE /api/train/user/{email}
+DELETE /api/train/user/{userId}
 ```
 - Removes user from system
 - Releases associated seat
@@ -119,22 +124,24 @@ app:
 
 1. **Book a Ticket**:
 ```bash
-curl -X POST "http://localhost:8080/api/train/purchase?seatNumber=A1" \
+curl -X POST "http://localhost:8080/api/train/purchase" \
      -H "Content-Type: application/json" \
-     -d '{"firstName":"John","lastName":"Doe","email":"john@example.com"}'
+     -d '{"userId":"1","seatNumber":"A1"}'
 ```
 
 2. **Modify Seat**:
 ```bash
-curl -X PUT "http://localhost:8080/api/train/user/john@example.com/seat?newSeatNumber=B1"
+curl -X PUT "http://localhost:8080/api/train/modify-seat" \
+     -H "Content-Type: application/json" \
+     -d '{"userId":"1","seatNumber":"B1"}'
 ```
 
 3. **View Receipt**:
 ```bash
-curl -X GET "http://localhost:8080/api/train/receipt/john@example.com"
+curl -X GET "http://localhost:8080/api/train/receipt/1"
 ```
 
 4. **Delete User**:
 ```bash
-curl -X DELETE "http://localhost:8080/api/train/user/john@example.com"
+curl -X DELETE "http://localhost:8080/api/train/user/1"
 ```
