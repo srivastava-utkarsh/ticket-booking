@@ -3,7 +3,11 @@
 A concurrent train ticket booking system that handles seat reservations with thread safety and proper error handling.
 
 ## Quick Start
-**A Postman collection is included in the project: `Train App.postman_collection.json`**
+**A Postman collection is included in the project:**
+```diff
++ Train App.postman_collection.json
+```
+
 Import this collection into Postman to quickly test all API endpoints with pre-configured requests.
 
 ## System Architecture
