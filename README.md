@@ -8,7 +8,7 @@ Import this collection into Postman to quickly test all API endpoints with pre-c
 
 ## System Architecture
 
-### Initialization (AppConfig)
+### Initialization (AppConfig.java)
 The system initializes with pre-configured users and seats:
 
 1. **User Generation**:
