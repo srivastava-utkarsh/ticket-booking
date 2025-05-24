@@ -16,29 +16,34 @@ Import this collection into Postman to quickly test all API endpoints with pre-c
 The system initializes with pre-configured users and seats:
 
 1. **User Generation**:
-   - Creates users based on ```diff
+   - Creates users based on 
+```diff
 + app.user-count
-``` from application.yml
+``` 
+from application.yml
    - Each user gets:
      - Unique ID (auto-incremented)
      - First name and last name
      - Email (user_1@test.com, user_2@test.com, etc.)
-     - Initial wallet balance (configured in ```diff
+     - Initial wallet balance (configured in 
+     
+```diff
 + app.wallet-balance
-``` from application.yml)
+``` 
+from application.yml)
      - <img width="1211" alt="image" src="https://github.com/user-attachments/assets/146e20ed-fa9d-4583-83db-e81b1cbf83bb" />
 
-
 2. **Seat Generation**:
-   - Creates seats based on ```diff
+   - Creates seats based on 
+```diff
 + app.seat-count
-``` from application.yml
+``` 
+from application.yml
    - Two sections: A and B
    - Each section gets seats numbered A1, A2... and B1, B2...
    - All seats are initially available
    - Uses ConcurrentHashMap for thread-safe operations
    - <img width="1211" alt="image" src="https://github.com/user-attachments/assets/0c1db9e2-a5b6-4c1b-9bfc-59d438827173" />
-
 
 ### Core Component: SeatManager
 The heart of the application is the `SeatManager` class which handles all seat booking operations with thread safety:
