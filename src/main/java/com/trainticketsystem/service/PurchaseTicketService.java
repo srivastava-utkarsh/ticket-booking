@@ -1,6 +1,5 @@
 package com.trainticketsystem.service;
 
-import com.trainticketsystem.model.SeatManager;
 import com.trainticketsystem.model.User;
 import com.trainticketsystem.response.TicketResponse;
 import com.trainticketsystem.utils.TicketResponseBuilder;
