@@ -5,7 +5,7 @@ A concurrent train ticket booking system that handles seat reservations with thr
 ## Quick Start
 **A Postman collection is included in the project:**
 ```diff
-+Train_App.postman_collection.json
++ Train_App.postman_collection.json
 ```
 
 Import this collection into Postman to quickly test all API endpoints with pre-configured requests.
